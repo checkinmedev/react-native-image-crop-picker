@@ -345,13 +345,13 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
             }
 
             if (cameraIntent.resolveActivity(activity.getPackageManager()) == null) {
-                resultCollector.notifyProblem(E_CANNOT_LAUNCH_CAMERA, "Cannot launch camera");
+                // resultCollector.notifyProblem(E_CANNOT_LAUNCH_CAMERA, "Cannot launch camera");
                 return;
             }
 
             activity.startActivityForResult(cameraIntent, CAMERA_PICKER_REQUEST);
         } catch (Exception e) {
-            resultCollector.notifyProblem(E_FAILED_TO_OPEN_CAMERA, e);
+            // resultCollector.notifyProblem(E_FAILED_TO_OPEN_CAMERA, e);
         }
 
     }
@@ -381,7 +381,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
             final Intent chooserIntent = Intent.createChooser(galleryIntent, "Pick an image");
             activity.startActivityForResult(chooserIntent, IMAGE_PICKER_REQUEST);
         } catch (Exception e) {
-            resultCollector.notifyProblem(E_FAILED_TO_SHOW_PICKER, e);
+            // resultCollector.notifyProblem(E_FAILED_TO_SHOW_PICKER, e);
         }
     }
 
@@ -489,7 +489,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
     private void getAsyncSelection(final Activity activity, Uri uri, boolean isCamera) throws Exception {
         String path = resolveRealPath(activity, uri, isCamera);
         if (path == null || path.isEmpty()) {
-            resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, "Cannot resolve asset path.");
+            // resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, "Cannot resolve asset path.");
             return;
         }
 
@@ -554,14 +554,14 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
 
                             resultCollector.notifySuccess(video);
                         } catch (Exception e) {
-                            resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, e);
+                            // resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, e);
                         }
                     }
                 }, new Callback() {
                     @Override
                     public void invoke(Object... args) {
                         WritableNativeMap ex = (WritableNativeMap) args[0];
-                        resultCollector.notifyProblem(ex.getString("code"), ex.getString("message"));
+                        // resultCollector.notifyProblem(ex.getString("code"), ex.getString("message"));
                     }
                 }));
             }
@@ -696,7 +696,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
 
     private void imagePickerResult(Activity activity, final int requestCode, final int resultCode, final Intent data) {
         if (resultCode == Activity.RESULT_CANCELED) {
-            resultCollector.notifyProblem(E_PICKER_CANCELLED_KEY, E_PICKER_CANCELLED_MSG);
+            // resultCollector.notifyProblem(E_PICKER_CANCELLED_KEY, E_PICKER_CANCELLED_MSG);
         } else if (resultCode == Activity.RESULT_OK) {
             if (multiple) {
                 ClipData clipData = data.getClipData();
@@ -713,14 +713,14 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
                         }
                     }
                 } catch (Exception ex) {
-                    resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, ex.getMessage());
+                    // resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, ex.getMessage());
                 }
 
             } else {
                 Uri uri = data.getData();
 
                 if (uri == null) {
-                    resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, "Cannot resolve image url");
+                    // resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, "Cannot resolve image url");
                     return;
                 }
 
@@ -730,7 +730,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
                     try {
                         getAsyncSelection(activity, uri, false);
                     } catch (Exception ex) {
-                        resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, ex.getMessage());
+                        // resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, ex.getMessage());
                     }
                 }
             }
@@ -739,12 +739,12 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
 
     private void cameraPickerResult(Activity activity, final int requestCode, final int resultCode, final Intent data) {
         if (resultCode == Activity.RESULT_CANCELED) {
-            resultCollector.notifyProblem(E_PICKER_CANCELLED_KEY, E_PICKER_CANCELLED_MSG);
+            // resultCollector.notifyProblem(E_PICKER_CANCELLED_KEY, E_PICKER_CANCELLED_MSG);
         } else if (resultCode == Activity.RESULT_OK) {
             Uri uri = mCameraCaptureURI;
 
             if (uri == null) {
-                resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, "Cannot resolve image url");
+                // resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, "Cannot resolve image url");
                 return;
             }
 
@@ -762,7 +762,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
                         resultCollector.notifySuccess(result);
                     }
                 } catch (Exception ex) {
-                    resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, ex.getMessage());
+                    // resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, ex.getMessage());
                 }
             }
         }
@@ -790,13 +790,13 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
                         throw new Exception("Cannot crop video files");
                     }
                 } catch (Exception ex) {
-                    resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, ex.getMessage());
+                    // resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, ex.getMessage());
                 }
             } else {
-                resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, "Cannot find image data");
+                // resultCollector.notifyProblem(E_NO_IMAGE_DATA_FOUND, "Cannot find image data");
             }
         } else {
-            resultCollector.notifyProblem(E_PICKER_CANCELLED_KEY, E_PICKER_CANCELLED_MSG);
+            // resultCollector.notifyProblem(E_PICKER_CANCELLED_KEY, E_PICKER_CANCELLED_MSG);
         }
     }
 
