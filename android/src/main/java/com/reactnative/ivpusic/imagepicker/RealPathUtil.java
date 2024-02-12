@@ -108,20 +108,20 @@ class RealPathUtil {
         fileName = fileName.substring(fileName.lastIndexOf('/') + 1);
         File path = new File(tmpDir);
         File file = new File(path, fileName);
-        try {
-            FileOutputStream oos = new FileOutputStream(file);
-            byte[] buf = new byte[8192];
-            InputStream is = context.getContentResolver().openInputStream(uri);
-            int c = 0;
-            while ((c = is.read(buf, 0, buf.length)) > 0) {
-                oos.write(buf, 0, c);
-                oos.flush();
-            }
-            oos.close();
-            is.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     FileOutputStream oos = new FileOutputStream(file);
+        //     byte[] buf = new byte[8192];
+        //     InputStream is = context.getContentResolver().openInputStream(uri);
+        //     int c = 0;
+        //     while ((c = is.read(buf, 0, buf.length)) > 0) {
+        //         oos.write(buf, 0, c);
+        //         oos.flush();
+        //     }
+        //     oos.close();
+        //     is.close();
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
         return file;
     }
 
